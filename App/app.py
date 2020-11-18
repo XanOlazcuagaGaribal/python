@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import os  
 from pathlib import Path
 
+st.set_option('deprecation.showPyplotGlobalUse', False)
+
 st.title("Visualisation interactive de données")
 
 st.header("Choisir un dataset dans la liste ci dessous")
@@ -57,6 +59,51 @@ if st.checkbox("Afficher les statistiques descriptives"):
 # Affichage de différents graphiques
 # Heatmap de corrélation 
 if st.checkbox("Matrice de corrélation"):
-    st.write(sns.heatmap(df.corr(),annot=True))
+    heatmap = sns.heatmap(df.corr(), vmin=-1, vmax=1, annot=True)
+    heatmap.set_title('Heatmap de corrélation', fontdict={'fontsize':12}, pad=12)
+    st.write(heatmap)
     st.pyplot()
+    
 		
+# Graphique en barre
+
+if st.checkbox("Diagramme en bar"):
+    all_columns_names = df.columns.tolist()
+    primary_col = st.selectbox("Choisir la variable",all_columns_names)
+
+    if st.button("Diagramme"):
+        st.text("Création du diagramme")
+        plt.figure(figsize=(15,10))
+        plot = sns.countplot(x=primary_col, data=df)
+        st.write(plot)
+        st.pyplot()
+        
+
+# Diagrammes personnalisés
+
+st.subheader("Diagrammes personnalisés")
+all_columns_names = df.columns.tolist()
+type_of_plot = st.selectbox("Choisir le type de diagramme",["area","bar","line","hist","box","kde"])
+selected_columns_names = st.multiselect("Select Columns To Plot",all_columns_names)
+
+if st.button("Generate Plot"):
+	st.success("Generating Customizable Plot of {} for {}".format(type_of_plot,selected_columns_names))
+
+		# Plot By Streamlit
+	if type_of_plot == 'area':
+		cust_data = df[selected_columns_names]
+		st.area_chart(cust_data)
+
+	elif type_of_plot == 'bar':
+		cust_data = df[selected_columns_names]
+		st.bar_chart(cust_data)
+
+	elif type_of_plot == 'line':
+		cust_data = df[selected_columns_names]
+		st.line_chart(cust_data)
+
+		# Custom Plot 
+	elif type_of_plot:
+		cust_plot= df[selected_columns_names].plot(kind=type_of_plot)
+		st.write(cust_plot)
+		st.pyplot()
