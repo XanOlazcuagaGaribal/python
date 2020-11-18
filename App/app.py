@@ -73,8 +73,8 @@ if st.checkbox("Diagramme en bar"):
 
     if st.button("Diagramme"):
         st.text("Création du diagramme")
-        plt.figure(figsize=(15,10))
-        plot = sns.countplot(x=primary_col, data=df)
+        plt.figure(figsize=(30,10))
+        plot = sns.displot(df,x=primary_col)
         st.write(plot)
         st.pyplot()
         
@@ -84,10 +84,10 @@ if st.checkbox("Diagramme en bar"):
 st.subheader("Diagrammes personnalisés")
 all_columns_names = df.columns.tolist()
 type_of_plot = st.selectbox("Choisir le type de diagramme",["area","bar","line","hist","box","kde"])
-selected_columns_names = st.multiselect("Select Columns To Plot",all_columns_names)
+selected_columns_names = st.multiselect("Choisir les colonnes pour le diagramme",all_columns_names)
 
-if st.button("Generate Plot"):
-	st.success("Generating Customizable Plot of {} for {}".format(type_of_plot,selected_columns_names))
+if st.button("Générer le diagramme"):
+	st.success("Génération du diagramme {} pour {}".format(type_of_plot,selected_columns_names))
 
 		# Plot By Streamlit
 	if type_of_plot == 'area':
