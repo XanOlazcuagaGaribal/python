@@ -22,5 +22,25 @@ df = pd.read_csv(filename)
 
 #Affichage du dataset
 if st.checkbox("Afficher le dataset"):
-	number = st.number_input("Nombre de lignes à afficher")
+	number = int(st.number_input("Nombre de lignes à afficher"))
 	st.dataframe(df.head(number))
+
+#Afficher le nom des colonnes 
+if st.checkbox("Afficher le nom des colonnes"):
+    st.write(df.columns)
+
+#Afficher le type des colonnes du dataset ainsi que les colonnes sélectionnées 
+if st.checkbox("Afficher le type des colonnes"):
+    st.write(df.dtypes)
+
+#La shape du dataset, par lignes et par colonnes
+if st.checkbox("Shape du Dataset"):
+	data_dim = st.radio("Afficher les dimensions par ",("Lignes","Colonnes"))
+	if data_dim == 'Lignes':
+		st.text("Nombre de lignes")
+		st.write(df.shape[0])
+	elif data_dim == 'Colonnes':
+		st.text("Nombre de colonnes")
+		st.write(df.shape[1])
+	else:
+		st.write(df.shape)
