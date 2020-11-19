@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request, render_template, jsonify
 import json
+import os
 
 app = Flask(__name__)
 
@@ -34,7 +35,6 @@ def return_id(book_id=None):
             selected = book
     return selected    
 
-#Ne marche pas
 @app.route("/api/book/<path:titre>")
 def return_titre(titre):
     books = library()
@@ -43,9 +43,31 @@ def return_titre(titre):
             selected = book
     return selected    
 
-@app.route("/api/books/titre")
-def hello(name):
-    return "Hello %s" % name
+def load_books():
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(SITE_ROOT, "json", "books.json")
+    return json.load(open(json_url))
+
+@app.route("/api/booksfile", methods = ['GET'])
+def books_file():
+    books = load_books()
+    return jsonify(books)
+
+@app.route("/api/booksfile/<int:book_id>",methods = ['GET'])
+def return_file_id(book_id=None):
+    books = load_books()
+    for book in books:
+        if book['pageCount'] == int(book_id):
+            selected = book
+    return selected    
+
+@app.route("/api/booksfile/<path:titre>")
+def return_file_titre(titre):
+    books = load_books()
+    for book in books:
+        if book['title'] == titre:
+            selected = book
+    return selected
 
 if __name__ == '__main__':
     app.run(debug=True)
