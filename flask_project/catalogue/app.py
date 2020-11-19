@@ -66,8 +66,8 @@ def return_file_titre(titre):
     books = load_books()
     for book in books:
         if book['title'] == titre:
-            selected = book
-    return selected
+            selectedbook = book
+    return selectedbook
 
 if __name__ == '__main__':
     app.run(debug=True)
