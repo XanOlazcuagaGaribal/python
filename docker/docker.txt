@@ -1,0 +1,13 @@
+Image:
+    Une image est un ensemble de couches que l'on décrit pour construire "build" notre application. 
+Container:
+    L'instance de cette image s'appelle un conteneur
+
+Commandes docker:
+- build : construit l'image Docker 
+- run : instancie l'image dans un container 
+- exec : permet de lancer des commandes dans le container
+
+Port container:
+docker run -dp 3000:3000 getting-started
+Pour lancer le container en local (localhost:3000), il faut faire un mapping entre le port local et le port du container. Sans ce mapping on ne peut pas accéder à l'appli
