@@ -1,9 +1,15 @@
-from flask import Flask
-server = Flask(__name__)
+from flask import Flask,request, render_template, jsonify
 
-@server.route("/")
-def hello():
-    return "Hello World!"
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Hello"
+
+@app.route('/index')
+def index():
+    name="Xan"
+    return render_template('base.html',title="Welcome",name=name)
 
 if __name__ == "__main__":
-   server.run(host='0.0.0.0')
+   app.run(host='0.0.0.0')
