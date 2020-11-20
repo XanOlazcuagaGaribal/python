@@ -8,11 +8,16 @@ WORKDIR /app
 COPY app/requirements.txt .
 
 # install dependencies
-RUN pip install -r requirements.txt
-
+RUN pip install -r requirements.txt 
+RUN apt-get -y update
+RUN apt-get -y install python3
+RUN apt-get -y install python3-pip
+RUN apt-get -y install vim
 
 # copy the content of the local src directory to the working directory
 COPY app/src/ .
 
+# Container port
+EXPOSE 5000
 # command to run on container start
-CMD [ "python", "./app.py" ] 
+CMD python app.py
