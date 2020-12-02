@@ -17,15 +17,16 @@
         <h1 class="text-center">
           Todo List
         </h1>
-        <form class="form-inline">
+        <form class="form-inline" method="POST">
+          {% csrf_token %}
           <div class="form-group mb-2">
             <input type="text" readonly class="form-control-plaintext" id="t" value="Task content">
           </div>
           <div class="form-group mx-sm-3 mb-2">
             <label for="inputTaskContent" class="sr-only">Content</label>
-            <input type="text" class="form-control" id="inputTaskContent" placeholder="Content">
+            <input type="text" class="form-control" id="inputTaskContent" name="inputTaskContent" placeholder="Content">
           </div>
-          <button type="submit" class="btn btn-primary mb-2">Add task</button>
+          <button type="submit" class="btn btn-primary mb-2" name="addTask">Add task</button>
         </form>
       </div>
       <div class="col-md-2">
@@ -36,7 +37,15 @@
     <div></div>
 
     <ul class="list-unstyled" id="todo">
-      <!-- des choses a ajouter ici -->
+      
+        {% for todo in todos %} <!-- django template lang - for loop -->
+            <li class="taskItem">
+                <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}">
+                <label for="{{ todo.id }}"><span class="complete-">{{ todo.content }}</span></label>
+                <span class="category-{{ todo.category }}">{{ todo.is_done }}</span>
+                <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.created_date }} - {{ todo.due_date }}</strong>
+            </li>
+        {% endfor %}
 
     </ul>
 
