@@ -3,13 +3,9 @@ from flask import Flask,request, render_template, jsonify
 app = Flask(__name__)
 
 @app.route('/')
-def home():
-    return "Hello"
-
-@app.route('/index')
 def index():
-    name="Xan"
-    return render_template('base.html',title="Welcome",name=name)
+    return "Hello"
+    #return render_template("base.html")
 
 if __name__ == "__main__":
-   app.run(host='0.0.0.0')
+   app.run(debug=True)
