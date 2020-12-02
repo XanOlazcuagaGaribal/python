@@ -43,3 +43,7 @@ a {
 	text-indent:30px;
 	display:block;
 }
+
+.btn-done{
+  background-image:url(./done.png);
+}

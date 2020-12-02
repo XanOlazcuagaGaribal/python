@@ -14,9 +14,14 @@ def index(request):
             content = request.POST["inputTaskContent"]
             is_done = False
             created_date = date.today()
-            Todo = Task(content=content, is_done=is_done, created_date=created_date)
-            Todo.save()
+            todo = Task(content=content, is_done=is_done, created_date=created_date)
+            todo.save()
             return redirect("/todo")
-
+        if "deleteTask" in request.POST:
+            taskToDelete = request.POST.getlist('deleteTask')
+            Task.objects.get(pk__in=taskToDelete).delete()
+            return redirect("/todo")
+        if "todoDone" in request.POST:   
+            return redirect("/todo")  
     return render(request, 'todo/index.html',{"todos":todos})
 
