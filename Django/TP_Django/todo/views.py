@@ -18,10 +18,18 @@ def index(request):
             todo.save()
             return redirect("/todo")
         if "deleteTask" in request.POST:
-            taskToDelete = request.POST.getlist('deleteTask')
-            Task.objects.get(pk__in=taskToDelete).delete()
+            toDelete = request.POST["deleteTask"] 
+            for todo_id in toDelete:
+                todo = Task.objects.get(id=int(todo_id)) #getting todo id
+                todo.delete() #deleting todo
             return redirect("/todo")
         if "todoDone" in request.POST:   
             return redirect("/todo")  
     return render(request, 'todo/index.html',{"todos":todos})
+
+def deleteTask(request, pk):
+    task = Task.objects.get(id=pk)
+    task.delete()
+    if request.method == 'POST':
+        return redirect('/todo/')
 

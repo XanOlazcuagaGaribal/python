@@ -47,8 +47,10 @@
                   {% csrf_token %}
                   <input type="text" class="form-control-plaintext" id="{{ todo.id }}" value="{{ todo.content}}">
                   <button type="button" class="btn btn-success" name="todoDone" id="{{ todo.id }}">Done</button>
-                  <button type="submit" class="btn btn-danger" name="deleteTask" id="{{ todo.id }}" onclick="$('input#sublist').click();">Delete</button>
-                  
+                  <form action="{% url 'delete_task' todo.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" name="deleteTask">Delete</button>
+                </form>
               </li>
             {% endfor %}
           </ul>
